@@ -12,6 +12,7 @@ type Game = {
   players: string;
   tags: string[];
   source?: string;
+  sourcePage?: number;
   materials: string[];
   steps: string[];
   tips: string[];
@@ -48,6 +49,7 @@ const copy = {
     sourceNotePrefix: "Game library note:",
     sourceNote: "This library now mixes starter activities with sourced titles from your PDF books. We can keep expanding and refining each sourced game with full instructions.",
     sourceLabel: "Source",
+    pageLabel: "p.",
     gameFilters: "Game Filters",
     icebreakers: "icebreakers",
     groupGames: "group games",
@@ -96,6 +98,7 @@ const copy = {
     sourceNotePrefix: "Nota sobre os jogos:",
     sourceNote: "Esta biblioteca agora mistura jogos iniciais com titulos extraidos dos seus PDFs. Podemos continuar ampliando e refinando cada jogo com instrucoes completas.",
     sourceLabel: "Fonte",
+    pageLabel: "p.",
     gameFilters: "Filtros de Jogos",
     icebreakers: "quebra-gelos",
     groupGames: "jogos em grupo",
@@ -233,66 +236,114 @@ const sourcedIcebreakers: Game[] = [
 const icebreakers: Game[] = [...starterIcebreakers, ...sourcedIcebreakers];
 
 const sourcedGroupGames: Game[] = [
-  "Battle Ball With a Twist",
-  "Black Light Hockey",
-  "Dash",
-  "Dive In",
-  "Donkey Dodgeball",
-  "Double Trouble",
-  "Extreme Elimination",
-  "Fake Out",
-  "Gotcha",
-  "Hockey Encounter",
-  "Hot Potato Tag",
-  "Huddle Up",
-  "Marshmallow Drop",
-  "The Noodle Game",
-  "Pillow Fight",
-  "Shuffle Your Buns",
-  "Silly String Elimination",
-  "Silly String War",
-  "Slime Dodgeball",
-  "Stuff It",
-  "Toilet Paper Chaos",
-  "Toilet Paper Slam",
-  "Total Elimination",
-  "The Tower Competition",
-  "Tube Duel",
-  "Tunnel Vision",
-  "Ultimate Dodgeball",
-  "Whipped",
-].map((name) => ({
+  ["Battle Ball With a Twist", 2],
+  ["Black Light Hockey", 3],
+  ["Dash", 6],
+  ["Dive In", 7],
+  ["Donkey Dodgeball", 8],
+  ["Double Trouble", 9],
+  ["Extreme Elimination", 10],
+  ["Fake Out", 11],
+  ["Gotcha", 13],
+  ["Hockey Encounter", 15],
+  ["Hot Potato Tag", 17],
+  ["Huddle Up", 18],
+  ["Marshmallow Drop", 19],
+  ["The Noodle Game", 20],
+  ["Pillow Fight", 22],
+  ["Shuffle Your Buns", 23],
+  ["Silly String Elimination", 24],
+  ["Silly String War", 25],
+  ["Slime Dodgeball", 26],
+  ["Stuff It", 28],
+  ["Toilet Paper Chaos", 29],
+  ["Toilet Paper Slam", 31],
+  ["Total Elimination", 32],
+  ["The Tower Competition", 33],
+  ["Tube Duel", 35],
+  ["Tunnel Vision", 36],
+  ["Ultimate Dodgeball", 37],
+  ["Whipped", 38],
+].map((entry) => {
+  const [name, sourcePage] = entry as [string, number];
+  return ({
   name,
   kind: "Group Game",
   source: "28-Just-for-Fun-Youth-Group-Games.pdf",
+  sourcePage,
   time: "20-40 min",
   players: "10-35",
   tags: ["High energy", "Teamwork", "Indoor"],
-  materials: ["See source PDF", "Open play space", "Timer"],
-  steps: [
-    "Review the source PDF before the event for full setup and safety notes.",
-    "Prepare the play area and supplies before students arrive.",
-    "Explain boundaries, scoring, and stop signal before starting.",
-    "Run short rounds and reset teams between rounds.",
-  ],
-  tips: ["Use extra leaders for high-energy games.", "Choose a lower-contact game when space is tight."],
-}));
+  materials:
+    name === "Battle Ball With a Twist"
+      ? ["Playground or Nerf balls", "Orange cones", "Wide room or court"]
+      : name === "Black Light Hockey"
+        ? ["Plastic hockey sticks", "Black lights", "Glow necklaces", "Soft white balls", "Goals or cone goals"]
+        : name === "Dash"
+          ? ["Chairs", "Music", "Boundary markers"]
+          : name === "Dive In"
+            ? ["Marshmallows", "Buckets", "Pool or lake access"]
+            : ["See source PDF", "Open play space", "Timer"],
+  steps:
+    name === "Battle Ball With a Twist"
+      ? [
+          "Split teams on opposite sides with a cone center line.",
+          "Place balls across the center and start on GO.",
+          "Players throw to eliminate opponents; catches eliminate throwers.",
+          "Keep rounds short and rotate variation items only if safe for your setting.",
+        ]
+      : name === "Black Light Hockey"
+        ? [
+            "Darken room and prep black light setup plus glowing markers.",
+            "Assign goalies and define no-go areas near goals.",
+            "Play multiple 5-minute rounds with soft balls and scorekeepers.",
+            "Reset teams and supplies between rounds.",
+          ]
+        : name === "Dash"
+          ? [
+              "Set a large walking boundary with chairs scattered randomly inside.",
+              "Start music while players move around the outside boundary.",
+              "When music stops, players dash for open chairs.",
+              "Remove chairs and repeat until finalists remain.",
+            ]
+          : name === "Dive In"
+            ? [
+                "Scatter marshmallows across pool or shallow lake area.",
+                "Teams collect and return marshmallows to team buckets.",
+                "Run until all marshmallows are collected.",
+                "Count each bucket and declare winner.",
+              ]
+            : [
+                "Review the source PDF before the event for full setup and safety notes.",
+                "Prepare the play area and supplies before students arrive.",
+                "Explain boundaries, scoring, and stop signal before starting.",
+                "Run short rounds and reset teams between rounds.",
+              ],
+  tips:
+    name === "Black Light Hockey"
+      ? ["Use many adult leaders to keep the chaos controlled and safe.", "Soft white balls and clear stop signals are essential."]
+      : ["Use extra leaders for high-energy games.", "Choose a lower-contact game when space is tight."],
+  });
+});
 
 const sourcedIndoorGames: Game[] = [
-  "Broom Barrel Ball",
-  "Crazy Croquet",
-  "Dodge 'em Pit",
-  "Human Boggle",
-  "Large Group Battleship",
-  "Playdoughnary",
-  "Tag-a-Lot",
-  "Tic-Tac-Challenge",
-  "Tongue Twister Challenge",
-  "Video Concentration",
-].map((name) => ({
+  ["Broom Barrel Ball", 90],
+  ["Crazy Croquet", 92],
+  ["Dodge 'em Pit", 95],
+  ["Human Boggle", 97],
+  ["Large Group Battleship", 98],
+  ["Playdoughnary", 99],
+  ["Tag-a-Lot", 106],
+  ["Tic-Tac-Challenge", 109],
+  ["Tongue Twister Challenge", 112],
+  ["Video Concentration", 114],
+].map((entry) => {
+  const [name, sourcePage] = entry as [string, number];
+  return ({
   name,
   kind: "Group Game",
   source: "Indoor games and activities.pdf",
+  sourcePage,
   time: "20-35 min",
   players: "8-30",
   tags: ["Indoor", "Teamwork", "Low prep"],
@@ -304,26 +355,30 @@ const sourcedIndoorGames: Game[] = [
     "Debrief with one key takeaway.",
   ],
   tips: ["Use this set when weather or space keeps you indoors."],
-}));
+  });
+});
 
 const sourcedOutdoorGames: Game[] = [
-  "Hula-Hoop Group Relay",
-  "One-Pitch Softball",
-  "Wethead",
-  "Rain in the Face Relay",
-  "Spider Relay",
-  "Frisbee Relay",
-  "Bible Scavenger Hunt",
-  "Tube Tug",
-  "Centipede Relay",
-  "Team Dodgeball",
-  "Blindfold Football",
-  "Fireman's Fun Relay",
-  "Greedy Ball",
-].map((name) => ({
+  ["Hula-Hoop Group Relay", 63],
+  ["One-Pitch Softball", 64],
+  ["Wethead", 65],
+  ["Rain in the Face Relay", 66],
+  ["Spider Relay", 67],
+  ["Frisbee Relay", 69],
+  ["Bible Scavenger Hunt", 70],
+  ["Tube Tug", 73],
+  ["Centipede Relay", 76],
+  ["Team Dodgeball", 78],
+  ["Blindfold Football", 79],
+  ["Fireman's Fun Relay", 80],
+  ["Greedy Ball", 81],
+].map((entry) => {
+  const [name, sourcePage] = entry as [string, number];
+  return ({
   name,
   kind: "Group Game",
   source: "Outdoor games and activities.pdf",
+  sourcePage,
   time: "20-40 min",
   players: "10-35",
   tags: ["Outdoor", "High energy", "Teamwork"],
@@ -335,7 +390,8 @@ const sourcedOutdoorGames: Game[] = [
     "Record scores and announce results.",
   ],
   tips: ["Prioritize hydration and clear stop signals for outdoor rounds."],
-}));
+  });
+});
 
 const sourcedYouthGroupGames: Game[] = [
   "Fireman vs. Police",
@@ -660,7 +716,11 @@ function App() {
           <span className="time-chip">{game.time}</span>
         </div>
         <p className="meta">{game.players}</p>
-        {game.source ? <p className="source-meta"><strong>{text.sourceLabel}:</strong> {game.source}</p> : null}
+        {game.source ? (
+          <p className="source-meta">
+            <strong>{text.sourceLabel}:</strong> {game.source}{game.sourcePage ? ` (${text.pageLabel} ${game.sourcePage})` : ""}
+          </p>
+        ) : null}
         <div className="tag-row compact">
           {game.tags.map((tag) => (
             <span className="tag-label" key={tag}>{tagLabels[language][tag]}</span>
