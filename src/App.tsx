@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import "./App.css";
 
 type GameKind = "Icebreaker" | "Group Game";
+type PlannerTab = "games" | "food";
 
 type Game = {
   name: string;
@@ -241,10 +242,17 @@ function filterByTag(games: Game[], selectedTag: string) {
 }
 
 function App() {
+  const [activeTab, setActiveTab] = useState<PlannerTab>("games");
   const [date, setDate] = useState(new Date().toISOString().slice(0, 10));
   const [attendeeCount, setAttendeeCount] = useState(14);
   const [duration, setDuration] = useState(75);
   const [theme, setTheme] = useState("");
+  const [slicesPerPerson, setSlicesPerPerson] = useState(3);
+  const [slicesPerPizza, setSlicesPerPizza] = useState(8);
+  const [sodaServingsPerPerson, setSodaServingsPerPerson] = useState(2);
+  const [waterPerPerson, setWaterPerPerson] = useState(1);
+  const [chipServingsPerBag, setChipServingsPerBag] = useState(10);
+  const [dessertServingsPerPackage, setDessertServingsPerPackage] = useState(12);
   const [selectedTag, setSelectedTag] = useState("All");
   const [icebreaker, setIcebreaker] = useState<Game>(() => pickOne(icebreakers));
   const [groupGame, setGroupGame] = useState<Game>(() => pickOne(groupGames));
@@ -256,6 +264,39 @@ function App() {
     () => `${date} | People: ${attendeeCount} | Total: ${duration} min | Theme: ${theme || "General"}`,
     [date, attendeeCount, duration, theme],
   );
+
+  const foodEstimate = useMemo(() => {
+    const safeAttendeeCount = Math.max(0, attendeeCount || 0);
+    const safeSlicesPerPerson = Math.max(0, slicesPerPerson || 0);
+    const safeSlicesPerPizza = Math.max(1, slicesPerPizza || 1);
+    const safeSodaServingsPerPerson = Math.max(0, sodaServingsPerPerson || 0);
+    const safeWaterPerPerson = Math.max(0, waterPerPerson || 0);
+    const safeChipServingsPerBag = Math.max(1, chipServingsPerBag || 1);
+    const safeDessertServingsPerPackage = Math.max(1, dessertServingsPerPackage || 1);
+    const peopleWithBuffer = Math.ceil(safeAttendeeCount * 1.1);
+    const pizzaCount = Math.ceil((peopleWithBuffer * safeSlicesPerPerson) / safeSlicesPerPizza);
+    const twoLiterSodas = Math.ceil((peopleWithBuffer * safeSodaServingsPerPerson) / 5.6);
+    const waterBottles = Math.ceil(peopleWithBuffer * safeWaterPerPerson);
+    const chipBags = Math.ceil(peopleWithBuffer / safeChipServingsPerBag);
+    const dessertPackages = Math.ceil(peopleWithBuffer / safeDessertServingsPerPackage);
+
+    return {
+      peopleWithBuffer,
+      pizzaCount,
+      twoLiterSodas,
+      waterBottles,
+      chipBags,
+      dessertPackages,
+    };
+  }, [
+    attendeeCount,
+    chipServingsPerBag,
+    dessertServingsPerPackage,
+    slicesPerPerson,
+    slicesPerPizza,
+    sodaServingsPerPerson,
+    waterPerPerson,
+  ]);
 
   function getNewGames(tag = selectedTag) {
     const icePool = filterByTag(icebreakers, tag);
@@ -354,37 +395,126 @@ function App() {
         </div>
       </section>
 
-      <section className="panel">
-        <div className="filter-heading">
-          <h2>Game Filters</h2>
-          <p>{filteredIcebreakers.length} icebreakers | {filteredGroupGames.length} group games</p>
-        </div>
-        <div className="tag-row">
-          {tags.map((tag) => (
-            <button
-              className={tag === selectedTag ? "tag active" : "tag"}
-              key={tag}
-              onClick={() => selectTag(tag)}
-              type="button"
-            >
-              {tag}
-            </button>
-          ))}
-        </div>
-      </section>
+      <nav className="tabs" aria-label="Planner sections">
+        <button className={activeTab === "games" ? "tab active" : "tab"} onClick={() => setActiveTab("games")} type="button">
+          Games
+        </button>
+        <button className={activeTab === "food" ? "tab active" : "tab"} onClick={() => setActiveTab("food")} type="button">
+          Food Setup
+        </button>
+      </nav>
 
-      <section className="cards">
-        <article className="panel game-card">{renderGame(icebreaker)}</article>
-        <article className="panel game-card">{renderGame(groupGame)}</article>
-      </section>
+      {activeTab === "games" ? (
+        <>
+          <section className="panel source-note">
+            <strong>Game library note:</strong> These are starter activities, not sourced from your PDF books yet. Add your PDFs to the project and we can turn them into a tagged, sourced game library.
+          </section>
 
-      <section className="panel">
-        <h2>Printable Helpers</h2>
-        <div className="row">
-          <button onClick={() => printMafiaCards(8)}>Mafia Role Cards (8)</button>
-          <button onClick={() => printMafiaCards(12)}>Mafia Role Cards (12)</button>
-        </div>
-      </section>
+          <section className="panel">
+            <div className="filter-heading">
+              <h2>Game Filters</h2>
+              <p>{filteredIcebreakers.length} icebreakers | {filteredGroupGames.length} group games</p>
+            </div>
+            <div className="tag-row">
+              {tags.map((tag) => (
+                <button
+                  className={tag === selectedTag ? "tag active" : "tag"}
+                  key={tag}
+                  onClick={() => selectTag(tag)}
+                  type="button"
+                >
+                  {tag}
+                </button>
+              ))}
+            </div>
+          </section>
+
+          <section className="cards">
+            <article className="panel game-card">{renderGame(icebreaker)}</article>
+            <article className="panel game-card">{renderGame(groupGame)}</article>
+          </section>
+
+          <section className="panel">
+            <h2>Printable Helpers</h2>
+            <div className="row">
+              <button onClick={() => printMafiaCards(8)}>Mafia Role Cards (8)</button>
+              <button onClick={() => printMafiaCards(12)}>Mafia Role Cards (12)</button>
+            </div>
+          </section>
+        </>
+      ) : (
+        <section className="panel">
+          <div className="filter-heading">
+            <h2>Food Setup</h2>
+            <p>Includes a 10% buffer</p>
+          </div>
+
+          <div className="grid">
+            <label>
+              Slices Per Person
+              <input type="number" min={1} step={0.5} value={slicesPerPerson} onChange={(event) => setSlicesPerPerson(Number(event.target.value))} />
+            </label>
+            <label>
+              Slices Per Pizza
+              <input type="number" min={4} value={slicesPerPizza} onChange={(event) => setSlicesPerPizza(Number(event.target.value))} />
+            </label>
+            <label>
+              Soda Servings Per Person
+              <input type="number" min={0} step={0.5} value={sodaServingsPerPerson} onChange={(event) => setSodaServingsPerPerson(Number(event.target.value))} />
+            </label>
+            <label>
+              Water Bottles Per Person
+              <input type="number" min={0} step={0.5} value={waterPerPerson} onChange={(event) => setWaterPerPerson(Number(event.target.value))} />
+            </label>
+            <label>
+              Chip Servings Per Bag
+              <input type="number" min={1} value={chipServingsPerBag} onChange={(event) => setChipServingsPerBag(Number(event.target.value))} />
+            </label>
+            <label>
+              Dessert Servings Per Package
+              <input type="number" min={1} value={dessertServingsPerPackage} onChange={(event) => setDessertServingsPerPackage(Number(event.target.value))} />
+            </label>
+          </div>
+
+          <div className="food-results">
+            <article>
+              <span>Planning Count</span>
+              <strong>{foodEstimate.peopleWithBuffer}</strong>
+            </article>
+            <article>
+              <span>Pizzas</span>
+              <strong>{foodEstimate.pizzaCount}</strong>
+            </article>
+            <article>
+              <span>2-Liter Sodas</span>
+              <strong>{foodEstimate.twoLiterSodas}</strong>
+            </article>
+            <article>
+              <span>Water Bottles</span>
+              <strong>{foodEstimate.waterBottles}</strong>
+            </article>
+            <article>
+              <span>Chip Bags</span>
+              <strong>{foodEstimate.chipBags}</strong>
+            </article>
+            <article>
+              <span>Dessert Packs</span>
+              <strong>{foodEstimate.dessertPackages}</strong>
+            </article>
+          </div>
+
+          <div className="shopping-list">
+            <h3>Shopping List</h3>
+            <ul>
+              <li>{foodEstimate.pizzaCount} pizzas</li>
+              <li>{foodEstimate.twoLiterSodas} two-liter sodas</li>
+              <li>{foodEstimate.waterBottles} water bottles</li>
+              <li>{foodEstimate.chipBags} bags of chips</li>
+              <li>{foodEstimate.dessertPackages} dessert packages</li>
+            </ul>
+          </div>
+        </section>
+      )}
     </main>
   );
 }
