@@ -242,6 +242,36 @@ const ptGameContent: Record<string, GameLocalePack> = {
       "Vence quando o ultimo jogador entra na agua com o balde.",
     ],
   },
+  "Birds of a Feather Flock Together": {
+    materials: ["Espaco aberto"],
+    steps: [
+      "Associe cada estacao do ano a um som de passaro.",
+      "No sinal, cada pessoa encontra seu grupo usando apenas o som.",
+      "Forme os grupos e conte cada estacao.",
+      "O maior grupo vence.",
+    ],
+    tips: ["Demonstre os sons antes de iniciar."],
+  },
+  "Emotional Communication": {
+    materials: ["Cartoes de emocao", "Cadeiras"],
+    steps: [
+      "Escolha duplas e deixe uma pessoa sentada de costas para o publico.",
+      "Mostre a palavra de emocao apenas para quem vai atuar.",
+      "A pessoa atua sem falar ate o parceiro acertar.",
+      "Troque papeis e some pontos.",
+    ],
+    tips: ["Escolha voluntarios dispostos a atuar com energia."],
+  },
+  "Frozen T-Shirts": {
+    materials: ["Camisetas congeladas e dobradas", "Cronometro"],
+    steps: [
+      "Congele camisetas previamente.",
+      "Explique que vence quem vestir primeiro.",
+      "No sinal, todos tentam abrir e vestir a camiseta congelada.",
+      "Anuncie os vencedores.",
+    ],
+    tips: ["Use camisetas grandes para facilitar e evitar desconforto."],
+  },
 };
 
 function getLocalizedGameContent(game: Game, language: Language): GameLocalePack {
@@ -318,30 +348,138 @@ const starterIcebreakers: Game[] = [
 }));
 
 const sourcedIcebreakers: Game[] = [
-  "Birds of a Feather Flock Together",
-  "Emotional Communication",
-  "Frozen T-Shirts",
-  "Meet Your Colleagues",
-  "Name That Flower",
-  "Race for the Runts",
-  "Simon Says",
-  "Splash Balls",
-].map((name) => ({
-  name,
-  kind: "Icebreaker",
-  source: "Warm ups, mixers, crowd breakers.pdf",
-  time: "8-15 min",
-  players: "6-30",
-  tags: ["Discussion", "Indoor", "Low prep"],
-  materials: ["Open space", "Optional prompt cards"],
-  steps: [
-    "Introduce the activity and give one example.",
-    "Invite participants to respond, move, or partner up based on the prompt.",
-    "Keep the pace quick so the whole room stays involved.",
-    "Close with one short connection question.",
-  ],
-  tips: ["Use these early in the meeting to warm up the room.", "Choose volunteers who will enjoy being up front when needed."],
-}));
+  {
+    name: "Birds of a Feather Flock Together",
+    kind: "Icebreaker",
+    source: "Warm ups, mixers, crowd breakers.pdf",
+    sourcePage: 5,
+    time: "8-12 min",
+    players: "10-60",
+    tags: ["Discussion", "Indoor", "Low prep", "High energy"],
+    materials: ["Open room"],
+    steps: [
+      "Assign each birth season to a bird sound.",
+      "On signal, players find others from their season using only that sound.",
+      "Groups form and you count each season group.",
+      "Largest season group wins.",
+    ],
+    tips: ["Demonstrate each sound first.", "Set a short time limit to keep energy up."],
+  },
+  {
+    name: "Emotional Communication",
+    kind: "Icebreaker",
+    source: "Warm ups, mixers, crowd breakers.pdf",
+    sourcePage: 6,
+    time: "10-15 min",
+    players: "10-40",
+    tags: ["Discussion", "Indoor", "Low prep", "Teamwork"],
+    materials: ["Emotion cards", "Chairs"],
+    steps: [
+      "Pick pairs and seat one person from each pair facing away from the crowd.",
+      "Show emotion word to standing partner only.",
+      "Standing partner acts emotion silently until seated partner guesses.",
+      "Rotate roles and keep score by pair.",
+    ],
+    tips: ["Choose expressive volunteers.", "Use words that are age-appropriate and clear."],
+  },
+  {
+    name: "Frozen T-Shirts",
+    kind: "Icebreaker",
+    source: "Warm ups, mixers, crowd breakers.pdf",
+    sourcePage: 8,
+    time: "8-12 min",
+    players: "4-20",
+    tags: ["High energy", "Indoor", "Teamwork"],
+    materials: ["Frozen folded T-shirts", "Stopwatch"],
+    steps: [
+      "Freeze folded T-shirts ahead of time.",
+      "Bring contestants up and explain first person to put shirt on wins.",
+      "Start timer and let players unfold and wear frozen shirts.",
+      "Award winners and debrief with crowd.",
+    ],
+    tips: ["Use oversized shirts for safety and speed.", "Keep towels nearby for melted water."],
+  },
+  {
+    name: "Meet Your Colleagues",
+    kind: "Icebreaker",
+    source: "Warm ups, mixers, crowd breakers.pdf",
+    time: "8-15 min",
+    players: "8-30",
+    tags: ["Discussion", "Indoor", "Low prep"],
+    materials: ["Optional prompt cards"],
+    steps: [
+      "Pair people who do not know each other well.",
+      "Give a short prompt and 2 minutes to share.",
+      "Switch pairs and repeat with a new prompt.",
+      "Invite 2-3 highlights to share with group.",
+    ],
+    tips: ["Use easy first prompts, then go a bit deeper."],
+  },
+  {
+    name: "Name That Flower",
+    kind: "Icebreaker",
+    source: "Warm ups, mixers, crowd breakers.pdf",
+    time: "8-12 min",
+    players: "8-30",
+    tags: ["Discussion", "Indoor", "Low prep"],
+    materials: ["Flower names list"],
+    steps: [
+      "Read clues or descriptions tied to flower names.",
+      "Players guess individually or in teams.",
+      "Track points by round.",
+      "Review answers quickly at the end.",
+    ],
+    tips: ["Use team mode for larger groups."],
+  },
+  {
+    name: "Race for the Runts",
+    kind: "Icebreaker",
+    source: "Warm ups, mixers, crowd breakers.pdf",
+    time: "8-12 min",
+    players: "8-30",
+    tags: ["High energy", "Indoor", "Teamwork"],
+    materials: ["Small candy pieces", "Bowls"],
+    steps: [
+      "Place candy bowls at one end of room.",
+      "Teams send one runner at a time to collect a piece.",
+      "Runner returns and tags next teammate.",
+      "Most collected pieces wins.",
+    ],
+    tips: ["Set clear no-running zones if floor is slick."],
+  },
+  {
+    name: "Simon Says",
+    kind: "Icebreaker",
+    source: "Warm ups, mixers, crowd breakers.pdf",
+    time: "6-10 min",
+    players: "8-60",
+    tags: ["High energy", "Indoor", "No supplies"],
+    materials: ["None"],
+    steps: [
+      "Leader calls commands with and without phrase 'Simon says.'",
+      "Players follow only valid commands.",
+      "Anyone who misses command steps out for that round.",
+      "Run multiple short rounds.",
+    ],
+    tips: ["Use fast pacing and keep commands simple."],
+  },
+  {
+    name: "Splash Balls",
+    kind: "Icebreaker",
+    source: "Warm ups, mixers, crowd breakers.pdf",
+    time: "8-12 min",
+    players: "8-30",
+    tags: ["High energy", "Outdoor", "Teamwork"],
+    materials: ["Water balls or sponges", "Buckets"],
+    steps: [
+      "Split players into teams with a target bucket.",
+      "Teams throw water balls/sponges relay-style to fill bucket.",
+      "Reset and run multiple rounds.",
+      "Measure water level to determine winner.",
+    ],
+    tips: ["Use this outside and define safe throw distance."],
+  },
+];
 
 const icebreakers: Game[] = [...starterIcebreakers, ...sourcedIcebreakers];
 
@@ -482,6 +620,8 @@ const sourcedOutdoorGames: Game[] = [
   ["Blindfold Football", 79],
   ["Fireman's Fun Relay", 80],
   ["Greedy Ball", 81],
+  ["Human Croquet", 72],
+  ["Three-Legged Soccer", 77],
 ].map((entry) => {
   const [name, sourcePage] = entry as [string, number];
   return ({
@@ -501,6 +641,10 @@ const sourcedOutdoorGames: Game[] = [
           ? ["Water balloons", "Marked square play zone", "Raised toss position"]
           : name === "Rain in the Face Relay"
             ? ["Two plastic buckets", "Hill next to pool/lake", "Team relay lanes"]
+            : name === "Human Croquet"
+              ? ["Large field", "9 wicket volunteers", "Boundary markers"]
+              : name === "Three-Legged Soccer"
+                ? ["Soccer goals", "Soccer balls", "Cloth ties for ankles"]
             : ["See source PDF", "Field setup", "Safety boundary markers"],
   steps:
     name === "Hula-Hoop Group Relay"
@@ -531,6 +675,20 @@ const sourcedOutdoorGames: Game[] = [
                 "First runner rotates to the end and runs final leg.",
                 "Team whose final runner reaches the water first wins.",
               ]
+            : name === "Human Croquet"
+              ? [
+                  "Mark croquet-style course and assign standing wicket volunteers.",
+                  "Runners crawl through wicket legs in sequence and return.",
+                  "Tag next teammate after full course completion.",
+                  "Fastest team to cycle all runners wins.",
+                ]
+              : name === "Three-Legged Soccer"
+                ? [
+                    "Pair teammates and tie adjacent ankles for each pair.",
+                    "Play soccer with modified movement and spacing rules.",
+                    "Use one or two balls based on group size and control.",
+                    "Short timed halves with rotating substitutions.",
+                  ]
             : [
                 "Read the source game page and prep all required equipment.",
                 "Walk players through boundaries, safety, and win conditions.",
