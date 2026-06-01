@@ -266,6 +266,12 @@ button.secondary:hover {
   margin: 0;
 }
 
+.source-meta {
+  color: #59646d;
+  margin: 0;
+  font-size: 0.86rem;
+}
+
 .tip {
   margin: 0;
   color: #59646d;

@@ -11,6 +11,7 @@ type Game = {
   time: string;
   players: string;
   tags: string[];
+  source?: string;
   materials: string[];
   steps: string[];
   tips: string[];
@@ -45,7 +46,8 @@ const copy = {
     games: "Games",
     foodSetup: "Food Setup",
     sourceNotePrefix: "Game library note:",
-    sourceNote: "These are starter activities, not sourced from your PDF books yet. Add your PDFs to the project and we can turn them into a tagged, sourced game library.",
+    sourceNote: "This library now mixes starter activities with sourced titles from your PDF books. We can keep expanding and refining each sourced game with full instructions.",
+    sourceLabel: "Source",
     gameFilters: "Game Filters",
     icebreakers: "icebreakers",
     groupGames: "group games",
@@ -92,7 +94,8 @@ const copy = {
     games: "Jogos",
     foodSetup: "Comida",
     sourceNotePrefix: "Nota sobre os jogos:",
-    sourceNote: "Estes são jogos iniciais, ainda não extraídos dos seus PDFs. Adicione os PDFs ao projeto e podemos transformar isso em uma biblioteca com fontes, tags e materiais.",
+    sourceNote: "Esta biblioteca agora mistura jogos iniciais com titulos extraidos dos seus PDFs. Podemos continuar ampliando e refinando cada jogo com instrucoes completas.",
+    sourceLabel: "Fonte",
     gameFilters: "Filtros de Jogos",
     icebreakers: "quebra-gelos",
     groupGames: "jogos em grupo",
@@ -153,7 +156,7 @@ const tagLabels: Record<Language, Record<string, string>> = {
   },
 };
 
-const icebreakers: Game[] = [
+const starterIcebreakers: Game[] = [
   ["Two Truths and a Lie", ["Low prep", "Discussion", "Indoor", "No supplies"]],
   ["Speed Friending", ["High energy", "Discussion", "Indoor", "No supplies"]],
   ["Would You Rather Corners", ["High energy", "Discussion", "Indoor", "No supplies"]],
@@ -187,6 +190,7 @@ const icebreakers: Game[] = [
 ].map(([name, gameTags]) => ({
   name: name as string,
   kind: "Icebreaker",
+  source: "Starter library",
   time: "8-15 min",
   players: "6-30",
   tags: gameTags as string[],
@@ -200,10 +204,175 @@ const icebreakers: Game[] = [
   tips: ["Keep the first round easy.", "Move on before the energy dips."],
 }));
 
+const sourcedIcebreakers: Game[] = [
+  "Birds of a Feather Flock Together",
+  "Emotional Communication",
+  "Frozen T-Shirts",
+  "Meet Your Colleagues",
+  "Name That Flower",
+  "Race for the Runts",
+  "Simon Says",
+  "Splash Balls",
+].map((name) => ({
+  name,
+  kind: "Icebreaker",
+  source: "Warm ups, mixers, crowd breakers.pdf",
+  time: "8-15 min",
+  players: "6-30",
+  tags: ["Discussion", "Indoor", "Low prep"],
+  materials: ["Open space", "Optional prompt cards"],
+  steps: [
+    "Introduce the activity and give one example.",
+    "Invite participants to respond, move, or partner up based on the prompt.",
+    "Keep the pace quick so the whole room stays involved.",
+    "Close with one short connection question.",
+  ],
+  tips: ["Use these early in the meeting to warm up the room.", "Choose volunteers who will enjoy being up front when needed."],
+}));
+
+const icebreakers: Game[] = [...starterIcebreakers, ...sourcedIcebreakers];
+
+const sourcedGroupGames: Game[] = [
+  "Battle Ball With a Twist",
+  "Black Light Hockey",
+  "Dash",
+  "Dive In",
+  "Donkey Dodgeball",
+  "Double Trouble",
+  "Extreme Elimination",
+  "Fake Out",
+  "Gotcha",
+  "Hockey Encounter",
+  "Hot Potato Tag",
+  "Huddle Up",
+  "Marshmallow Drop",
+  "The Noodle Game",
+  "Pillow Fight",
+  "Shuffle Your Buns",
+  "Silly String Elimination",
+  "Silly String War",
+  "Slime Dodgeball",
+  "Stuff It",
+  "Toilet Paper Chaos",
+  "Toilet Paper Slam",
+  "Total Elimination",
+  "The Tower Competition",
+  "Tube Duel",
+  "Tunnel Vision",
+  "Ultimate Dodgeball",
+  "Whipped",
+].map((name) => ({
+  name,
+  kind: "Group Game",
+  source: "28-Just-for-Fun-Youth-Group-Games.pdf",
+  time: "20-40 min",
+  players: "10-35",
+  tags: ["High energy", "Teamwork", "Indoor"],
+  materials: ["See source PDF", "Open play space", "Timer"],
+  steps: [
+    "Review the source PDF before the event for full setup and safety notes.",
+    "Prepare the play area and supplies before students arrive.",
+    "Explain boundaries, scoring, and stop signal before starting.",
+    "Run short rounds and reset teams between rounds.",
+  ],
+  tips: ["Use extra leaders for high-energy games.", "Choose a lower-contact game when space is tight."],
+}));
+
+const sourcedIndoorGames: Game[] = [
+  "Broom Barrel Ball",
+  "Crazy Croquet",
+  "Dodge 'em Pit",
+  "Human Boggle",
+  "Large Group Battleship",
+  "Playdoughnary",
+  "Tag-a-Lot",
+  "Tic-Tac-Challenge",
+  "Tongue Twister Challenge",
+  "Video Concentration",
+].map((name) => ({
+  name,
+  kind: "Group Game",
+  source: "Indoor games and activities.pdf",
+  time: "20-35 min",
+  players: "8-30",
+  tags: ["Indoor", "Teamwork", "Low prep"],
+  materials: ["See source PDF", "Room setup", "Timer"],
+  steps: [
+    "Review the source page for exact rules and setup.",
+    "Set the room layout and explain objectives clearly.",
+    "Run short rounds and rotate participants.",
+    "Debrief with one key takeaway.",
+  ],
+  tips: ["Use this set when weather or space keeps you indoors."],
+}));
+
+const sourcedOutdoorGames: Game[] = [
+  "Hula-Hoop Group Relay",
+  "One-Pitch Softball",
+  "Wethead",
+  "Rain in the Face Relay",
+  "Spider Relay",
+  "Frisbee Relay",
+  "Bible Scavenger Hunt",
+  "Tube Tug",
+  "Centipede Relay",
+  "Team Dodgeball",
+  "Blindfold Football",
+  "Fireman's Fun Relay",
+  "Greedy Ball",
+].map((name) => ({
+  name,
+  kind: "Group Game",
+  source: "Outdoor games and activities.pdf",
+  time: "20-40 min",
+  players: "10-35",
+  tags: ["Outdoor", "High energy", "Teamwork"],
+  materials: ["See source PDF", "Field setup", "Safety boundary markers"],
+  steps: [
+    "Read the source game page and prep all required equipment.",
+    "Walk players through boundaries, safety, and win conditions.",
+    "Run timed rounds and rotate teams.",
+    "Record scores and announce results.",
+  ],
+  tips: ["Prioritize hydration and clear stop signals for outdoor rounds."],
+}));
+
+const sourcedYouthGroupGames: Game[] = [
+  "Fireman vs. Police",
+  "Paper Plate Shuffle",
+  "Line It Up",
+  "Spider Fight",
+  "Ninja",
+  "Lettuce Bowling",
+  "Mine Field",
+  "Longest Line",
+  "Clothes Pin Tag",
+  "Triangle Tag",
+  "Toe Fencing",
+  "Human Battleship",
+  "Quick Draw",
+].map((name) => ({
+  name,
+  kind: "Group Game",
+  source: "Youth Group Fun and Games.pdf",
+  time: "15-30 min",
+  players: "8-30",
+  tags: ["Indoor", "High energy", "Teamwork"],
+  materials: ["See source PDF", "Simple props"],
+  steps: [
+    "Use the source index and page references to choose your game.",
+    "Set clear rules and one visible stop signal.",
+    "Play multiple short rounds to keep pace high.",
+    "Close with a quick reflection or celebration.",
+  ],
+  tips: ["Great for weekly variety when you want fast setup and rotation."],
+}));
+
 const groupGames: Game[] = [
   {
     name: "Mafia/Werewolf",
     kind: "Group Game",
+    source: "Starter library",
     time: "25-40 min",
     players: "8-20",
     tags: ["Printable", "Strategy", "Indoor", "Discussion"],
@@ -219,6 +388,7 @@ const groupGames: Game[] = [
   {
     name: "Escape Room Challenge",
     kind: "Group Game",
+    source: "Starter library",
     time: "35-50 min",
     players: "8-24",
     tags: ["Teamwork", "Strategy", "Printable", "Indoor"],
@@ -234,6 +404,7 @@ const groupGames: Game[] = [
   {
     name: "Minute to Win It",
     kind: "Group Game",
+    source: "Starter library",
     time: "20-35 min",
     players: "10-30",
     tags: ["High energy", "Low prep", "Indoor", "Teamwork"],
@@ -249,6 +420,7 @@ const groupGames: Game[] = [
   {
     name: "Capture the Flag Mini",
     kind: "Group Game",
+    source: "Starter library",
     time: "25-40 min",
     players: "10-30",
     tags: ["High energy", "Teamwork", "Outdoor"],
@@ -259,6 +431,7 @@ const groupGames: Game[] = [
   {
     name: "Blindfold Obstacle Relay",
     kind: "Group Game",
+    source: "Starter library",
     time: "20-30 min",
     players: "8-24",
     tags: ["Teamwork", "Indoor", "High energy"],
@@ -269,6 +442,7 @@ const groupGames: Game[] = [
   {
     name: "Balloon Keep-Up",
     kind: "Group Game",
+    source: "Starter library",
     time: "15-25 min",
     players: "8-30",
     tags: ["High energy", "Low prep", "Indoor", "Teamwork"],
@@ -279,6 +453,7 @@ const groupGames: Game[] = [
   {
     name: "Mission Impossible Laser Maze",
     kind: "Group Game",
+    source: "Starter library",
     time: "25-40 min",
     players: "8-24",
     tags: ["High energy", "Teamwork", "Indoor"],
@@ -289,6 +464,7 @@ const groupGames: Game[] = [
   {
     name: "Collaborative Drawing Relay",
     kind: "Group Game",
+    source: "Starter library",
     time: "20-30 min",
     players: "8-28",
     tags: ["Teamwork", "Indoor", "Low prep"],
@@ -299,6 +475,7 @@ const groupGames: Game[] = [
   {
     name: "Trust Walk",
     kind: "Group Game",
+    source: "Starter library",
     time: "20-30 min",
     players: "8-24",
     tags: ["Teamwork", "Discussion", "Indoor"],
@@ -309,6 +486,7 @@ const groupGames: Game[] = [
   {
     name: "Silent Speed Stacking",
     kind: "Group Game",
+    source: "Starter library",
     time: "15-25 min",
     players: "8-30",
     tags: ["Teamwork", "Indoor", "Low prep"],
@@ -319,6 +497,7 @@ const groupGames: Game[] = [
   {
     name: "Human Knot",
     kind: "Group Game",
+    source: "Starter library",
     time: "15-25 min",
     players: "8-20",
     tags: ["Teamwork", "Indoor", "No supplies"],
@@ -329,6 +508,7 @@ const groupGames: Game[] = [
   {
     name: "Survival Ranking",
     kind: "Group Game",
+    source: "Starter library",
     time: "25-35 min",
     players: "8-30",
     tags: ["Discussion", "Strategy", "Teamwork", "Printable"],
@@ -336,6 +516,10 @@ const groupGames: Game[] = [
     steps: ["Give teams the same survival scenario.", "Rank items individually first.", "Rank again as a team.", "Compare how group decisions changed the answers."],
     tips: ["Choose age-appropriate scenarios.", "Debrief listening and compromise."],
   },
+  ...sourcedGroupGames,
+  ...sourcedIndoorGames,
+  ...sourcedOutdoorGames,
+  ...sourcedYouthGroupGames,
 ];
 
 function pickOne<T>(items: T[]) {
@@ -476,6 +660,7 @@ function App() {
           <span className="time-chip">{game.time}</span>
         </div>
         <p className="meta">{game.players}</p>
+        {game.source ? <p className="source-meta"><strong>{text.sourceLabel}:</strong> {game.source}</p> : null}
         <div className="tag-row compact">
           {game.tags.map((tag) => (
             <span className="tag-label" key={tag}>{tagLabels[language][tag]}</span>
