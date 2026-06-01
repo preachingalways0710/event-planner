@@ -18,6 +18,12 @@ type Game = {
   tips: string[];
 };
 
+type GameLocalePack = {
+  materials?: string[];
+  steps?: string[];
+  tips?: string[];
+};
+
 const tags = [
   "All",
   "Low prep",
@@ -158,6 +164,110 @@ const tagLabels: Record<Language, Record<string, string>> = {
     "No supplies": "Sem materiais",
   },
 };
+
+const ptGameContent: Record<string, GameLocalePack> = {
+  "Battle Ball With a Twist": {
+    materials: ["Bolas tipo playground ou Nerf", "Cones laranja", "Sala ampla ou quadra"],
+    steps: [
+      "Divida as equipes em lados opostos com linha central de cones.",
+      "Posicione as bolas no centro e inicie no sinal.",
+      "Jogadores arremessam para eliminar; bolas pegas eliminam quem arremessou.",
+      "Use rodadas curtas e variacoes seguras para seu contexto.",
+    ],
+    tips: ["Mantenha regras de contato claras.", "Use lideres extras para controlar ritmo e seguranca."],
+  },
+  "Black Light Hockey": {
+    materials: ["Tacos plastico", "Luz negra", "Colares que brilham", "Bolas macias brancas", "Gols ou cones"],
+    steps: [
+      "Escureca o ambiente e prepare iluminacao com marcacoes visiveis.",
+      "Defina goleiros e areas de protecao perto do gol.",
+      "Jogue rodadas de 5 minutos com contagem de pontos.",
+      "Reorganize equipes e materiais entre rodadas.",
+    ],
+    tips: ["Use varios lideres adultos para manter controle.", "Bolas macias e sinal de parada claro sao essenciais."],
+  },
+  Dash: {
+    materials: ["Cadeiras", "Musica", "Marcadores de area"],
+    steps: [
+      "Crie um limite de circulacao e espalhe cadeiras dentro da area.",
+      "Com musica tocando, todos se movimentam pelo limite.",
+      "Quando a musica parar, todos correm para uma cadeira livre.",
+      "Remova cadeiras e repita ate restarem finalistas.",
+    ],
+    tips: ["Rodadas curtas deixam o jogo mais divertido.", "Garanta espaco seguro para corrida curta."],
+  },
+  "Dive In": {
+    materials: ["Marshmallows", "Baldes", "Piscina ou lago"],
+    steps: [
+      "Espalhe marshmallows pela agua.",
+      "Equipes recolhem e levam para seus baldes.",
+      "Continue ate acabar os marshmallows.",
+      "Conte os baldes para definir vencedores.",
+    ],
+    tips: ["Tenha lideres vigiando os baldes.", "Use coletes se o local exigir seguranca extra."],
+  },
+  "Hula-Hoop Group Relay": {
+    materials: ["2 hula-hoops resistentes", "Area com duas linhas de referencia"],
+    steps: [
+      "Monte duas linhas separadas por cerca de 10 jardas.",
+      "Primeiro jogador atravessa com o aro e busca um colega por vez.",
+      "A cada ida e volta, mais um integrante entra no aro.",
+      "Vence a equipe que cruzar com todos os jogadores dentro do aro.",
+    ],
+  },
+  "One-Pitch Softball": {
+    materials: ["Material de softball", "Campo marcado para variacao de uma bola"],
+    steps: [
+      "Use regras de uma arremessada por rebatedor por rodada.",
+      "Pontue por corridas, sem contagem tradicional de eliminacoes.",
+      "Mantenha ritmo rapido entre jogadas e trocas.",
+      "Feche em 5 innings ou no limite de tempo.",
+    ],
+  },
+  Wethead: {
+    materials: ["Baloes de agua em cores de equipe", "Area de jogo marcada", "Plataforma baixa para lancador"],
+    steps: [
+      "Cada equipe tenta capturar baloes da propria cor sem estourar.",
+      "Baloes capturados intactos valem pontos.",
+      "Intercepte e estoure baloes da equipe rival quando possivel.",
+      "Equipe com mais baloes intactos vence.",
+    ],
+  },
+  "Rain in the Face Relay": {
+    materials: ["2 baldes plastico", "Ladeira proxima de agua (piscina ou lago)"],
+    steps: [
+      "Jogadores em fila descem para pegar agua no balde.",
+      "Ao voltar, jogam agua no rosto do proximo e passam o balde.",
+      "O primeiro jogador vai para o fim da fila.",
+      "Vence quando o ultimo jogador entra na agua com o balde.",
+    ],
+  },
+};
+
+function getLocalizedGameContent(game: Game, language: Language): GameLocalePack {
+  if (language === "en") {
+    return {
+      materials: game.materials,
+      steps: game.steps,
+      tips: game.tips,
+    };
+  }
+
+  const translated = ptGameContent[game.name];
+  if (translated) {
+    return {
+      materials: translated.materials ?? game.materials,
+      steps: translated.steps ?? game.steps,
+      tips: translated.tips ?? game.tips,
+    };
+  }
+
+  return {
+    materials: game.materials,
+    steps: game.steps,
+    tips: game.tips,
+  };
+}
 
 const starterIcebreakers: Game[] = [
   ["Two Truths and a Lie", ["Low prep", "Discussion", "Indoor", "No supplies"]],
@@ -382,14 +492,55 @@ const sourcedOutdoorGames: Game[] = [
   time: "20-40 min",
   players: "10-35",
   tags: ["Outdoor", "High energy", "Teamwork"],
-  materials: ["See source PDF", "Field setup", "Safety boundary markers"],
-  steps: [
-    "Read the source game page and prep all required equipment.",
-    "Walk players through boundaries, safety, and win conditions.",
-    "Run timed rounds and rotate teams.",
-    "Record scores and announce results.",
-  ],
-  tips: ["Prioritize hydration and clear stop signals for outdoor rounds."],
+  materials:
+    name === "Hula-Hoop Group Relay"
+      ? ["2 strong hula-hoops", "Two lines about 10 yards apart"]
+      : name === "One-Pitch Softball"
+        ? ["Softball setup", "Specially marked field", "Umpire with spare balls"]
+        : name === "Wethead"
+          ? ["Water balloons", "Marked square play zone", "Raised toss position"]
+          : name === "Rain in the Face Relay"
+            ? ["Two plastic buckets", "Hill next to pool/lake", "Team relay lanes"]
+            : ["See source PDF", "Field setup", "Safety boundary markers"],
+  steps:
+    name === "Hula-Hoop Group Relay"
+      ? [
+          "Set lines roughly 10 yards apart with teams split across both lines.",
+          "First player runs in hoop to far line and picks up one teammate.",
+          "Pair returns and collects one more teammate each trip.",
+          "First team crossing with all 5 members inside hoop wins.",
+        ]
+      : name === "One-Pitch Softball"
+        ? [
+            "Use one-pitch-per-batter rule and keep innings moving quickly.",
+            "Count runs only; use modified foul/out rules from source page.",
+            "Keep pitcher cadence tight with visible umpire timing.",
+            "Finish by innings or time cap.",
+          ]
+        : name === "Wethead"
+          ? [
+              "Create teams in a marked area with toss leaders on platforms.",
+              "Toss team-color balloons into the zone for catches.",
+              "Intact catches score; interference rules apply.",
+              "Count intact team-color balloons at end.",
+            ]
+          : name === "Rain in the Face Relay"
+            ? [
+                "Line teams on a hill near water source in relay order.",
+                "Each player fills bucket, runs back, splashes next player, and passes bucket.",
+                "First runner rotates to the end and runs final leg.",
+                "Team whose final runner reaches the water first wins.",
+              ]
+            : [
+                "Read the source game page and prep all required equipment.",
+                "Walk players through boundaries, safety, and win conditions.",
+                "Run timed rounds and rotate teams.",
+                "Record scores and announce results.",
+              ],
+  tips:
+    name === "Rain in the Face Relay"
+      ? ["Expect slippery ground and use strict safety spacing.", "This game works best with quick relay turns."]
+      : ["Prioritize hydration and clear stop signals for outdoor rounds."],
   });
 });
 
@@ -705,6 +856,7 @@ function App() {
 
   function renderGame(game: Game) {
     const kindLabel = game.kind === "Icebreaker" ? text.icebreakerKind : text.groupGameKind;
+    const localized = getLocalizedGameContent(game, language);
 
     return (
       <>
@@ -726,9 +878,9 @@ function App() {
             <span className="tag-label" key={tag}>{tagLabels[language][tag]}</span>
           ))}
         </div>
-        <p><strong>{text.materials}:</strong> {game.materials.join(", ")}</p>
-        <ol>{game.steps.map((step) => <li key={step}>{step}</li>)}</ol>
-        <p className="tip"><strong>{text.leaderTip}:</strong> {game.tips[0]}</p>
+        <p><strong>{text.materials}:</strong> {localized.materials?.join(", ")}</p>
+        <ol>{localized.steps?.map((step) => <li key={step}>{step}</li>)}</ol>
+        <p className="tip"><strong>{text.leaderTip}:</strong> {localized.tips?.[0]}</p>
       </>
     );
   }
