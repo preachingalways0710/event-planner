@@ -272,6 +272,28 @@ button.secondary:hover {
   font-size: 0.86rem;
 }
 
+.detail-pill {
+  display: inline-block;
+  width: fit-content;
+  margin: 0;
+  border-radius: 999px;
+  padding: 5px 9px;
+  font-size: 0.76rem;
+  font-weight: 700;
+}
+
+.detail-pill.detailed {
+  background: #def6ea;
+  color: #17603f;
+  border: 1px solid #b9ebd1;
+}
+
+.detail-pill.title-only {
+  background: #f4f5f6;
+  color: #53626b;
+  border: 1px solid #d9dfe2;
+}
+
 .tip {
   margin: 0;
   color: #59646d;

@@ -13,6 +13,7 @@ type Game = {
   tags: string[];
   source?: string;
   sourcePage?: number;
+  detailLevel: "detailed" | "title-only";
   materials: string[];
   steps: string[];
   tips: string[];
@@ -56,6 +57,8 @@ const copy = {
     sourceNote: "This library now mixes starter activities with sourced titles from your PDF books. We can keep expanding and refining each sourced game with full instructions.",
     sourceLabel: "Source",
     pageLabel: "p.",
+    detailDetailed: "Detailed",
+    detailTitleOnly: "Title-only",
     gameFilters: "Game Filters",
     icebreakers: "icebreakers",
     groupGames: "group games",
@@ -105,6 +108,8 @@ const copy = {
     sourceNote: "Esta biblioteca agora mistura jogos iniciais com titulos extraidos dos seus PDFs. Podemos continuar ampliando e refinando cada jogo com instrucoes completas.",
     sourceLabel: "Fonte",
     pageLabel: "p.",
+    detailDetailed: "Detalhado",
+    detailTitleOnly: "Apenas titulo",
     gameFilters: "Filtros de Jogos",
     icebreakers: "quebra-gelos",
     groupGames: "jogos em grupo",
@@ -272,10 +277,163 @@ const ptGameContent: Record<string, GameLocalePack> = {
     ],
     tips: ["Use camisetas grandes para facilitar e evitar desconforto."],
   },
+  "Donkey Dodgeball": {
+    materials: ["Bolas macias", "Cones de limite", "Cronometro"],
+    steps: ["Divida equipes em lados opostos.", "Jogue rodadas curtas de eliminacao com regras claras.", "Valide eliminacoes com lideres nas laterais.", "Reinicie com rotacao rapida."],
+  },
+  "Double Trouble": {
+    materials: ["Material conforme pagina de origem", "Espaco aberto"],
+    steps: ["Explique o objetivo e as regras da variacao.", "Use duplas para cada equipe.", "Aplique pontuacao por rodada.", "Troque duplas entre rodadas."],
+  },
+  "Extreme Elimination": {
+    materials: ["Bolas macias", "Area marcada"],
+    steps: ["Defina area de jogo e zonas seguras.", "Jogue por eliminacao em rodadas de tempo.", "Reentrada controlada entre rodadas.", "Some pontos por equipe."],
+  },
+  "Fake Out": {
+    materials: ["Bolas leves", "Cones"],
+    steps: ["Monte dois lados e linha central.", "Use fintas e passes para confundir oponente.", "Pontue por alvos ou eliminacoes validas.", "Reinicie rapidamente cada rodada."],
+  },
+  "Hockey Encounter": {
+    materials: ["Tacos plasticos", "Bola leve", "Gols/cones"],
+    steps: ["Monte mini-area de hockey.", "Defina limite de contato e seguranca.", "Jogue rodadas curtas com goleiros.", "Pontue e troque linhas."],
+  },
+  "Hot Potato Tag": {
+    materials: ["Objeto leve", "Musica opcional"],
+    steps: ["Passe o objeto enquanto o grupo se move.", "Quem estiver com objeto no sinal entra no pega.", "Pega curto de 30-45s.", "Reinicie com novo lider."],
+  },
+  "Huddle Up": {
+    materials: ["Cartoes de acao"],
+    steps: ["Forme pequenos grupos.", "Cada grupo recebe desafio rapido.", "Cumpram juntos dentro do tempo.", "Apresente resultado para todos."],
+  },
+  "Marshmallow Drop": {
+    materials: ["Marshmallows", "Recipientes de alvo"],
+    steps: ["Defina ponto de arremesso.", "Jogadores tentam acertar alvos com marshmallows.", "Pontue por acerto limpo.", "Some por equipe no fim."],
+  },
+  "The Noodle Game": {
+    materials: ["Espaguetes de piscina", "Cones"],
+    steps: ["Entregue noodles por equipe.", "Cumpra desafio de transporte/controle.", "Penalize saídas da area.", "Vence maior pontuacao."],
+  },
+  "Pillow Fight": {
+    materials: ["Travesseiros macios", "Area segura delimitada"],
+    steps: ["Explique regras de contato seguro.", "Duelos curtos por tempo.", "Vence por equilibrio/controle.", "Rotacione participantes."],
+  },
+  "Silly String War": {
+    materials: ["Latas de silly string", "Oculos de protecao"],
+    steps: ["Defina area e limites.", "Rodada com alvo por equipe.", "Pare ao sinal e conte acertos.", "Reinicie com novas duplas/alvos."],
+  },
+  "Toilet Paper Chaos": {
+    materials: ["Rolos de papel higienico"],
+    steps: ["Distribua rolos por equipe.", "Cumpram desafio de montagem/envolvimento.", "Tempo curto e pontuacao visual.", "Limpeza rapida ao fim."],
+  },
+  "Tube Duel": {
+    materials: ["Tubos de espuma", "Area de duelo"],
+    steps: ["Duplas entram na area marcada.", "Objetivo: toque valido sem contato perigoso.", "Melhor de 3 para cada duelo.", "Pontuacao por equipe."],
+  },
+  "Tunnel Vision": {
+    materials: ["Cones", "Objetos de alvo"],
+    steps: ["Monte percurso em formato de tunel.", "Jogadores atravessam e completam alvo final.", "Cronometre por equipe.", "Menor tempo total vence."],
+  },
+  "Ultimate Dodgeball": {
+    materials: ["Varias bolas macias", "Cones de limite"],
+    steps: ["Configure formato classico de dodgeball.", "Eliminacao por acerto/captura validos.", "Rodadas de 3-5 minutos.", "Pontue vitorias por rodada."],
+  },
+};
+
+const enGameContent: Record<string, GameLocalePack> = {
+  "Donkey Dodgeball": {
+    materials: ["Soft dodgeballs", "Boundary cones", "Timer"],
+    steps: ["Split teams on opposite sides.", "Play elimination rounds with strict safety rules.", "Leaders validate eliminations.", "Reset quickly between rounds."],
+    tips: ["Use low-impact throws only.", "Keep rounds short for high engagement."],
+  },
+  "Double Trouble": {
+    materials: ["Source-specific props", "Open play area"],
+    steps: ["Brief teams on the variation objective.", "Run in pairs.", "Score each round visibly.", "Rotate pairings often."],
+  },
+  "Extreme Elimination": {
+    materials: ["Soft balls", "Marked field"],
+    steps: ["Define lanes, boundaries, and safe zones.", "Run timed elimination rounds.", "Allow controlled re-entry each round.", "Total team points for final score."],
+  },
+  "Fake Out": {
+    materials: ["Light balls", "Cones"],
+    steps: ["Set opposing sides and center line.", "Use fakes and quick transitions to create openings.", "Score by target hits or valid tags.", "Restart immediately after each point."],
+  },
+  "Hockey Encounter": {
+    materials: ["Plastic sticks", "Light ball", "Cone goals"],
+    steps: ["Set mini-hockey area.", "Enforce no-contact rules.", "Play short scored rounds.", "Rotate lines between rounds."],
+  },
+  "Hot Potato Tag": {
+    materials: ["Light object", "Optional music"],
+    steps: ["Pass object while players move.", "Whoever has object on signal enters tag phase.", "Run 30-45 second tag phase.", "Reset with new starter."],
+  },
+  "Huddle Up": {
+    materials: ["Prompt cards"],
+    steps: ["Form small teams.", "Give each team a fast challenge prompt.", "Complete challenge under time cap.", "Share outcome with room."],
+  },
+  "Marshmallow Drop": {
+    materials: ["Marshmallows", "Target containers"],
+    steps: ["Set throw line and targets.", "Players attempt accurate drops.", "Score clean hits.", "Total team points."],
+  },
+  "The Noodle Game": {
+    materials: ["Pool noodles", "Cones"],
+    steps: ["Distribute noodles per team.", "Run balance/transport challenge.", "Apply boundary penalties.", "Highest score wins."],
+  },
+  "Pillow Fight": {
+    materials: ["Soft pillows", "Safe duel area"],
+    steps: ["Review safe-contact rules.", "Run short duel rounds.", "Win by control or valid touches.", "Rotate participants."],
+  },
+  "Silly String War": {
+    materials: ["Silly string cans", "Eye protection"],
+    steps: ["Mark battle zones.", "Run team-vs-team spray rounds.", "Stop on whistle and count valid hits.", "Rotate teams and restart."],
+  },
+  "Toilet Paper Chaos": {
+    materials: ["Toilet paper rolls"],
+    steps: ["Distribute rolls by team.", "Run wrap/build challenge variation.", "Score by completion and creativity.", "Reset and clean quickly."],
+  },
+  "Tube Duel": {
+    materials: ["Foam tubes", "Marked duel lane"],
+    steps: ["Pairs enter lane.", "Score safe legal touches.", "Play best-of-three bouts.", "Total points by team."],
+  },
+  "Tunnel Vision": {
+    materials: ["Cones", "Target objects"],
+    steps: ["Build tunnel-style course.", "Players complete course and final objective.", "Track times by team.", "Lowest total wins."],
+  },
+  "Ultimate Dodgeball": {
+    materials: ["Multiple soft balls", "Boundary cones"],
+    steps: ["Set standard dodgeball format.", "Eliminate by valid hits/catches.", "Play 3-5 minute rounds.", "Track round wins."],
+    tips: ["Use multiple refs for larger groups."],
+  },
+  "Meet Your Colleagues": {
+    materials: ["Prompt cards"],
+    steps: ["Pair people who do not know each other well.", "Run timed introductions.", "Rotate pairs and repeat.", "Share quick highlights."],
+  },
+  "Name That Flower": {
+    materials: ["Clue list"],
+    steps: ["Read clues tied to flower names.", "Players guess individually or in teams.", "Score each correct answer.", "Review at the end."],
+  },
+  "Race for the Runts": {
+    materials: ["Small candies", "Collection bowls"],
+    steps: ["Teams relay to collect one candy each trip.", "Tag next teammate on return.", "Continue until timer ends.", "Most collected wins."],
+  },
+  "Simon Says": {
+    materials: ["None"],
+    steps: ["Leader calls commands with and without trigger phrase.", "Players follow only valid commands.", "Misses step out for round.", "Repeat quick rounds."],
+  },
+  "Splash Balls": {
+    materials: ["Water balls or sponges", "Buckets"],
+    steps: ["Teams relay wet objects to fill bucket.", "Run multiple timed rounds.", "Measure bucket level.", "Highest fill wins."],
+  },
 };
 
 function getLocalizedGameContent(game: Game, language: Language): GameLocalePack {
   if (language === "en") {
+    const translated = enGameContent[game.name];
+    if (translated) {
+      return {
+        materials: translated.materials ?? game.materials,
+        steps: translated.steps ?? game.steps,
+        tips: translated.tips ?? game.tips,
+      };
+    }
     return {
       materials: game.materials,
       steps: game.steps,
@@ -333,6 +491,7 @@ const starterIcebreakers: Game[] = [
 ].map(([name, gameTags]) => ({
   name: name as string,
   kind: "Icebreaker",
+  detailLevel: "detailed",
   source: "Starter library",
   time: "8-15 min",
   players: "6-30",
@@ -351,6 +510,7 @@ const sourcedIcebreakers: Game[] = [
   {
     name: "Birds of a Feather Flock Together",
     kind: "Icebreaker",
+    detailLevel: "detailed",
     source: "Warm ups, mixers, crowd breakers.pdf",
     sourcePage: 5,
     time: "8-12 min",
@@ -368,6 +528,7 @@ const sourcedIcebreakers: Game[] = [
   {
     name: "Emotional Communication",
     kind: "Icebreaker",
+    detailLevel: "detailed",
     source: "Warm ups, mixers, crowd breakers.pdf",
     sourcePage: 6,
     time: "10-15 min",
@@ -385,6 +546,7 @@ const sourcedIcebreakers: Game[] = [
   {
     name: "Frozen T-Shirts",
     kind: "Icebreaker",
+    detailLevel: "detailed",
     source: "Warm ups, mixers, crowd breakers.pdf",
     sourcePage: 8,
     time: "8-12 min",
@@ -402,7 +564,9 @@ const sourcedIcebreakers: Game[] = [
   {
     name: "Meet Your Colleagues",
     kind: "Icebreaker",
+    detailLevel: "title-only",
     source: "Warm ups, mixers, crowd breakers.pdf",
+    sourcePage: 11,
     time: "8-15 min",
     players: "8-30",
     tags: ["Discussion", "Indoor", "Low prep"],
@@ -418,7 +582,9 @@ const sourcedIcebreakers: Game[] = [
   {
     name: "Name That Flower",
     kind: "Icebreaker",
+    detailLevel: "title-only",
     source: "Warm ups, mixers, crowd breakers.pdf",
+    sourcePage: 12,
     time: "8-12 min",
     players: "8-30",
     tags: ["Discussion", "Indoor", "Low prep"],
@@ -434,7 +600,9 @@ const sourcedIcebreakers: Game[] = [
   {
     name: "Race for the Runts",
     kind: "Icebreaker",
+    detailLevel: "title-only",
     source: "Warm ups, mixers, crowd breakers.pdf",
+    sourcePage: 23,
     time: "8-12 min",
     players: "8-30",
     tags: ["High energy", "Indoor", "Teamwork"],
@@ -450,7 +618,9 @@ const sourcedIcebreakers: Game[] = [
   {
     name: "Simon Says",
     kind: "Icebreaker",
+    detailLevel: "title-only",
     source: "Warm ups, mixers, crowd breakers.pdf",
+    sourcePage: 27,
     time: "6-10 min",
     players: "8-60",
     tags: ["High energy", "Indoor", "No supplies"],
@@ -466,7 +636,9 @@ const sourcedIcebreakers: Game[] = [
   {
     name: "Splash Balls",
     kind: "Icebreaker",
+    detailLevel: "title-only",
     source: "Warm ups, mixers, crowd breakers.pdf",
+    sourcePage: 28,
     time: "8-12 min",
     players: "8-30",
     tags: ["High energy", "Outdoor", "Teamwork"],
@@ -517,6 +689,7 @@ const sourcedGroupGames: Game[] = [
   return ({
   name,
   kind: "Group Game",
+  detailLevel: "title-only",
   source: "28-Just-for-Fun-Youth-Group-Games.pdf",
   sourcePage,
   time: "20-40 min",
@@ -590,6 +763,7 @@ const sourcedIndoorGames: Game[] = [
   return ({
   name,
   kind: "Group Game",
+  detailLevel: "title-only",
   source: "Indoor games and activities.pdf",
   sourcePage,
   time: "20-35 min",
@@ -627,6 +801,7 @@ const sourcedOutdoorGames: Game[] = [
   return ({
   name,
   kind: "Group Game",
+  detailLevel: "title-only",
   source: "Outdoor games and activities.pdf",
   sourcePage,
   time: "20-40 min",
@@ -719,6 +894,7 @@ const sourcedYouthGroupGames: Game[] = [
 ].map((name) => ({
   name,
   kind: "Group Game",
+  detailLevel: "title-only",
   source: "Youth Group Fun and Games.pdf",
   time: "15-30 min",
   players: "8-30",
@@ -737,6 +913,7 @@ const groupGames: Game[] = [
   {
     name: "Mafia/Werewolf",
     kind: "Group Game",
+    detailLevel: "detailed",
     source: "Starter library",
     time: "25-40 min",
     players: "8-20",
@@ -753,6 +930,7 @@ const groupGames: Game[] = [
   {
     name: "Escape Room Challenge",
     kind: "Group Game",
+    detailLevel: "detailed",
     source: "Starter library",
     time: "35-50 min",
     players: "8-24",
@@ -769,6 +947,7 @@ const groupGames: Game[] = [
   {
     name: "Minute to Win It",
     kind: "Group Game",
+    detailLevel: "detailed",
     source: "Starter library",
     time: "20-35 min",
     players: "10-30",
@@ -785,6 +964,7 @@ const groupGames: Game[] = [
   {
     name: "Capture the Flag Mini",
     kind: "Group Game",
+    detailLevel: "detailed",
     source: "Starter library",
     time: "25-40 min",
     players: "10-30",
@@ -796,6 +976,7 @@ const groupGames: Game[] = [
   {
     name: "Blindfold Obstacle Relay",
     kind: "Group Game",
+    detailLevel: "detailed",
     source: "Starter library",
     time: "20-30 min",
     players: "8-24",
@@ -807,6 +988,7 @@ const groupGames: Game[] = [
   {
     name: "Balloon Keep-Up",
     kind: "Group Game",
+    detailLevel: "detailed",
     source: "Starter library",
     time: "15-25 min",
     players: "8-30",
@@ -818,6 +1000,7 @@ const groupGames: Game[] = [
   {
     name: "Mission Impossible Laser Maze",
     kind: "Group Game",
+    detailLevel: "detailed",
     source: "Starter library",
     time: "25-40 min",
     players: "8-24",
@@ -829,6 +1012,7 @@ const groupGames: Game[] = [
   {
     name: "Collaborative Drawing Relay",
     kind: "Group Game",
+    detailLevel: "detailed",
     source: "Starter library",
     time: "20-30 min",
     players: "8-28",
@@ -840,6 +1024,7 @@ const groupGames: Game[] = [
   {
     name: "Trust Walk",
     kind: "Group Game",
+    detailLevel: "detailed",
     source: "Starter library",
     time: "20-30 min",
     players: "8-24",
@@ -851,6 +1036,7 @@ const groupGames: Game[] = [
   {
     name: "Silent Speed Stacking",
     kind: "Group Game",
+    detailLevel: "detailed",
     source: "Starter library",
     time: "15-25 min",
     players: "8-30",
@@ -862,6 +1048,7 @@ const groupGames: Game[] = [
   {
     name: "Human Knot",
     kind: "Group Game",
+    detailLevel: "detailed",
     source: "Starter library",
     time: "15-25 min",
     players: "8-20",
@@ -873,6 +1060,7 @@ const groupGames: Game[] = [
   {
     name: "Survival Ranking",
     kind: "Group Game",
+    detailLevel: "detailed",
     source: "Starter library",
     time: "25-35 min",
     players: "8-30",
@@ -1015,6 +1203,7 @@ function App() {
   function renderGame(game: Game) {
     const kindLabel = game.kind === "Icebreaker" ? text.icebreakerKind : text.groupGameKind;
     const localized = getLocalizedGameContent(game, language);
+    const isDetailed = game.detailLevel === "detailed" || Boolean(enGameContent[game.name]) || Boolean(ptGameContent[game.name]);
 
     return (
       <>
@@ -1026,6 +1215,9 @@ function App() {
           <span className="time-chip">{game.time}</span>
         </div>
         <p className="meta">{game.players}</p>
+        <p className={isDetailed ? "detail-pill detailed" : "detail-pill title-only"}>
+          {isDetailed ? text.detailDetailed : text.detailTitleOnly}
+        </p>
         {game.source ? (
           <p className="source-meta">
             <strong>{text.sourceLabel}:</strong> {game.source}{game.sourcePage ? ` (${text.pageLabel} ${game.sourcePage})` : ""}
