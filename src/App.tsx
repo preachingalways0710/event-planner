@@ -337,6 +337,39 @@ const ptGameContent: Record<string, GameLocalePack> = {
     materials: ["Varias bolas macias", "Cones de limite"],
     steps: ["Configure formato classico de dodgeball.", "Eliminacao por acerto/captura validos.", "Rodadas de 3-5 minutos.", "Pontue vitorias por rodada."],
   },
+  "Spider Relay": {
+    materials: ["Marcadores de percurso", "Espaco aberto"],
+    steps: ["Forme equipes em linha.", "Corredores fazem percurso em estilo 'aranha' definido pelo lider.", "Toque no proximo corredor ao voltar.", "Menor tempo total vence."],
+  },
+  "Frisbee Relay": {
+    materials: ["Frisbees", "Cones"],
+    steps: ["Defina percurso com estacoes.", "Jogador avanca apenas apos passe/alvo valido.", "Revezamento continua ate finalizar percurso.", "Equipe mais rapida vence."],
+  },
+  "Bible Scavenger Hunt": {
+    materials: ["Biblias", "Lista de pistas", "Canetas"],
+    steps: ["Entregue pistas com referencias biblicas.", "Equipes localizam respostas e registram.", "Tempo limitado para concluir lista.", "Pontue por acertos e velocidade."],
+  },
+  "Centipede Relay": {
+    materials: ["Area marcada"],
+    steps: ["Equipes formam 'centopeia' em fila conectada.", "Deslocam juntas no percurso sem quebrar formacao.", "Se quebrar, para e reorganiza.", "Vence quem concluir primeiro."],
+  },
+  "Team Dodgeball": {
+    materials: ["Bolas macias", "Cones de limite"],
+    steps: ["Divida em duas equipes com zonas definidas.", "Jogue por eliminacao/captura valida.", "Rodadas curtas com reinicio rapido.", "Pontue vitorias por rodada."],
+  },
+  "Blindfold Football": {
+    materials: ["Vendas", "Bola macia", "Lideres guias"],
+    steps: ["Jogadores vendados seguem comandos dos guias.", "Equipe tenta avancar bola com seguranca.", "Contato limitado e controlado.", "Pontuacao por progresso/objetivo."],
+    tips: ["Use espaco amplo e supervisao alta."],
+  },
+  "Fireman's Fun Relay": {
+    materials: ["Cones", "Itens de relay"],
+    steps: ["Monte etapas de relay com desafios fisicos leves.", "Cada jogador completa etapa e retorna.", "Toque inicia proximo participante.", "Equipe com menor tempo vence."],
+  },
+  "Greedy Ball": {
+    materials: ["Bolas", "Zonas de pontuacao"],
+    steps: ["Bolas entram em jogo em area central.", "Equipes coletam e movem para sua zona.", "Acoes de defesa permitidas sem contato perigoso.", "Vence quem tiver mais bolas ao final."],
+  },
 };
 
 const enGameContent: Record<string, GameLocalePack> = {
@@ -421,6 +454,131 @@ const enGameContent: Record<string, GameLocalePack> = {
   "Splash Balls": {
     materials: ["Water balls or sponges", "Buckets"],
     steps: ["Teams relay wet objects to fill bucket.", "Run multiple timed rounds.", "Measure bucket level.", "Highest fill wins."],
+  },
+  "Spider Relay": {
+    materials: ["Course markers", "Open field"],
+    steps: ["Line teams for relay starts.", "Runners complete leader-defined spider movement pattern.", "Tag next runner on return.", "Lowest total time wins."],
+  },
+  "Frisbee Relay": {
+    materials: ["Frisbees", "Cones"],
+    steps: ["Build relay course with throwing stations.", "Advance only after valid pass/target hit.", "Continue until full team completes route.", "Fastest team wins."],
+  },
+  "Bible Scavenger Hunt": {
+    materials: ["Bibles", "Clue sheets", "Pens"],
+    steps: ["Distribute clue sheets with Bible references.", "Teams locate answers and record them.", "Run on a strict timer.", "Score by accuracy plus completion speed."],
+  },
+  "Centipede Relay": {
+    materials: ["Marked lane"],
+    steps: ["Teams form connected centipede lines.", "Move through route without breaking formation.", "If line breaks, stop and reconnect.", "First team through wins."],
+  },
+  "Team Dodgeball": {
+    materials: ["Soft dodgeballs", "Boundary cones"],
+    steps: ["Split two teams with clear boundaries.", "Play elimination/catch rules.", "Use short rounds with quick resets.", "Track round wins."],
+  },
+  "Blindfold Football": {
+    materials: ["Blindfolds", "Soft football", "Guide leaders"],
+    steps: ["Blindfold players and assign verbal guides.", "Move ball by guided teamwork.", "Maintain low-contact safety rules.", "Score by controlled progress/objective."],
+    tips: ["Requires extra leaders and clear stop commands."],
+  },
+  "Fireman's Fun Relay": {
+    materials: ["Cones", "Relay props"],
+    steps: ["Set multi-stage relay tasks.", "Each runner completes stage and returns.", "Tag next participant.", "Lowest team time wins."],
+  },
+  "Greedy Ball": {
+    materials: ["Balls", "Scoring zones"],
+    steps: ["Release balls into center play zone.", "Teams collect and transfer to scoring zone.", "Allow safe defensive disruption.", "Most balls at end wins."],
+  },
+  "Broom Barrel Ball": {
+    materials: ["Broom handles", "Barrels or targets", "Soft ball"],
+    steps: ["Set lanes and target barrels.", "Players advance ball with broom control.", "Score by target hits or completions.", "Rotate players each round."],
+  },
+  "Crazy Croquet": {
+    materials: ["Cones/chairs as wickets", "Variant movement props"],
+    steps: ["Lay out croquet-style route.", "Run creative movement variations through wickets.", "Complete route and tag next player.", "Fastest completion wins."],
+  },
+  "Dodge 'em Pit": {
+    materials: ["Soft dodgeballs", "Marked play pit"],
+    steps: ["Create central pit zone.", "Players avoid and throw under controlled rules.", "Eliminate or score by valid hits.", "Reset frequently for pace."],
+  },
+  "Human Boggle": {
+    materials: ["Letter cards", "Floor grid markers"],
+    steps: ["Build human letter grid.", "Teams form words by moving players in sequence.", "Score by valid words and length.", "Rotate letters between rounds."],
+  },
+  "Large Group Battleship": {
+    materials: ["Grid layout", "Call cards"],
+    steps: ["Set giant coordinate grid.", "Teams place ships secretly.", "Call coordinates to locate hits.", "Last team with ships afloat wins."],
+  },
+  "Playdoughnary": {
+    materials: ["Playdough", "Prompt cards", "Timer"],
+    steps: ["Players sculpt prompt with no words.", "Team guesses within timer.", "Score for correct guesses.", "Rotate sculptors each round."],
+  },
+  "Tag-a-Lot": {
+    materials: ["Open room", "Boundary markers"],
+    steps: ["Choose taggers and boundaries.", "Run timed tag rounds.", "Tagged players follow rule variation.", "Rotate taggers often."],
+  },
+  "Tic-Tac-Challenge": {
+    materials: ["Tic-tac-toe board markers", "Relay markers"],
+    steps: ["Teams run relay to place marks on giant board.", "One mark per trip.", "First to complete line wins.", "Reset for rematch."],
+  },
+  "Tongue Twister Challenge": {
+    materials: ["Tongue twister cards", "Timer"],
+    steps: ["Players draw and perform twist phrase.", "Award points for clean delivery.", "Team totals decide winner.", "Use escalating difficulty rounds."],
+  },
+  "Video Concentration": {
+    materials: ["Screen clips", "Answer sheets"],
+    steps: ["Show short clips or visual prompts.", "Teams record details and answers.", "Score by recall accuracy.", "Review answers at end."],
+  },
+  "Fireman vs. Police": {
+    materials: ["Team identifiers", "Mission cards", "Open space"],
+    steps: ["Assign roles and objective zones.", "Teams complete role-based capture/recovery goals.", "Use timed rounds.", "Score each mission outcome."],
+  },
+  "Paper Plate Shuffle": {
+    materials: ["Paper plates"],
+    steps: ["Players use plates as stepping tools.", "Advance across area without touching floor.", "Relay format by team.", "Fastest complete team wins."],
+  },
+  "Line It Up": {
+    materials: ["Prompt criteria"],
+    steps: ["Call criteria (birthday, shoe size, etc.).", "Teams line up correctly as fast as possible.", "Check accuracy before scoring.", "Repeat with new prompts."],
+  },
+  "Spider Fight": {
+    materials: ["Open space", "Boundary markers"],
+    steps: ["Players use low movement stance for tag/duel objective.", "Short head-to-head rounds.", "Winners rotate forward.", "Track cumulative wins."],
+  },
+  Ninja: {
+    materials: ["Open circle area"],
+    steps: ["Players stand in circle and take turn strikes/blocks.", "One motion per turn.", "Hit hand = eliminated.", "Last player wins."],
+  },
+  "Lettuce Bowling": {
+    materials: ["Head of lettuce", "Pins or bottles"],
+    steps: ["Set bowling lane and pins.", "Roll lettuce to knock pins.", "Score by pin count.", "Multiple rounds per player."],
+  },
+  "Mine Field": {
+    materials: ["Obstacles", "Blindfolds"],
+    steps: ["Scatter safe obstacles as minefield.", "One partner blindfolded, one guide gives commands.", "Complete route with fewest penalties.", "Switch roles and repeat."],
+  },
+  "Longest Line": {
+    materials: ["None"],
+    steps: ["Teams create longest continuous line using available items.", "Set strict time limit.", "Measure final lines.", "Longest valid line wins."],
+  },
+  "Clothes Pin Tag": {
+    materials: ["Clothespins"],
+    steps: ["Each player starts with clothespins attached.", "Steal pins from others while protecting your own.", "Round ends on whistle.", "Most pins wins."],
+  },
+  "Triangle Tag": {
+    materials: ["None"],
+    steps: ["Groups of three hold triangle spacing.", "Tagger tries to reach designated target player.", "Team movement protects target.", "Rotate roles often."],
+  },
+  "Toe Fencing": {
+    materials: ["Open flat floor"],
+    steps: ["Pairs face each other and try toe taps.", "No pushing or unsafe contact.", "Best-of rounds scoring.", "Rotate opponents."],
+  },
+  "Human Battleship": {
+    materials: ["Large coordinate grid"],
+    steps: ["Teams hide ship positions on human grid.", "Opponents call coordinates.", "Mark hits and misses.", "Last fleet standing wins."],
+  },
+  "Quick Draw": {
+    materials: ["Prompt cards", "Paper", "Markers", "Timer"],
+    steps: ["Show prompt and start short draw timer.", "Reveal drawings simultaneously.", "Award points for recognizability/creativity.", "Repeat multiple rounds."],
   },
 };
 
