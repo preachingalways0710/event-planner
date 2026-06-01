@@ -3,6 +3,7 @@ import "./App.css";
 
 type GameKind = "Icebreaker" | "Group Game";
 type PlannerTab = "games" | "food";
+type Language = "en" | "pt";
 
 type Game = {
   name: string;
@@ -27,6 +28,130 @@ const tags = [
   "Strategy",
   "No supplies",
 ];
+
+const copy = {
+  en: {
+    title: "Event Planner",
+    subtitle: "Plan games, icebreakers, and practical details for youth events and church gatherings.",
+    eventSetup: "Event Setup",
+    date: "Date",
+    people: "People",
+    totalMinutes: "Total Minutes",
+    theme: "Theme",
+    themePlaceholder: "Friendship, service, trust...",
+    summaryTheme: "Theme",
+    getNewGames: "Get New Games",
+    printPlan: "Print Plan Sheet",
+    games: "Games",
+    foodSetup: "Food Setup",
+    sourceNotePrefix: "Game library note:",
+    sourceNote: "These are starter activities, not sourced from your PDF books yet. Add your PDFs to the project and we can turn them into a tagged, sourced game library.",
+    gameFilters: "Game Filters",
+    icebreakers: "icebreakers",
+    groupGames: "group games",
+    materials: "Materials",
+    leaderTip: "Leader tip",
+    printableHelpers: "Printable Helpers",
+    mafia8: "Mafia Role Cards (8)",
+    mafia12: "Mafia Role Cards (12)",
+    buffer: "Includes a 10% buffer",
+    slicesPerPerson: "Slices Per Person",
+    slicesPerPizza: "Slices Per Pizza",
+    sodaPerPerson: "Soda Servings Per Person",
+    waterPerPerson: "Water Bottles Per Person",
+    chipServings: "Chip Servings Per Bag",
+    dessertServings: "Dessert Servings Per Package",
+    planningCount: "Planning Count",
+    pizzas: "Pizzas",
+    sodas: "2-Liter Sodas",
+    water: "Water Bottles",
+    chips: "Chip Bags",
+    desserts: "Dessert Packs",
+    shoppingList: "Shopping List",
+    pizzaItem: "pizzas",
+    sodaItem: "two-liter sodas",
+    waterItem: "water bottles",
+    chipItem: "bags of chips",
+    dessertItem: "dessert packages",
+    icebreakerKind: "Icebreaker",
+    groupGameKind: "Group Game",
+    all: "All",
+  },
+  pt: {
+    title: "Planejador de Eventos",
+    subtitle: "Planeje jogos, quebra-gelos e detalhes práticos para eventos de jovens e reuniões da igreja.",
+    eventSetup: "Configuração do Evento",
+    date: "Data",
+    people: "Pessoas",
+    totalMinutes: "Minutos Totais",
+    theme: "Tema",
+    themePlaceholder: "Amizade, serviço, confiança...",
+    summaryTheme: "Tema",
+    getNewGames: "Novos Jogos",
+    printPlan: "Imprimir Plano",
+    games: "Jogos",
+    foodSetup: "Comida",
+    sourceNotePrefix: "Nota sobre os jogos:",
+    sourceNote: "Estes são jogos iniciais, ainda não extraídos dos seus PDFs. Adicione os PDFs ao projeto e podemos transformar isso em uma biblioteca com fontes, tags e materiais.",
+    gameFilters: "Filtros de Jogos",
+    icebreakers: "quebra-gelos",
+    groupGames: "jogos em grupo",
+    materials: "Materiais",
+    leaderTip: "Dica para o líder",
+    printableHelpers: "Materiais para Imprimir",
+    mafia8: "Cartas de Máfia (8)",
+    mafia12: "Cartas de Máfia (12)",
+    buffer: "Inclui uma margem de 10%",
+    slicesPerPerson: "Fatias por Pessoa",
+    slicesPerPizza: "Fatias por Pizza",
+    sodaPerPerson: "Porções de Refrigerante por Pessoa",
+    waterPerPerson: "Garrafas de Água por Pessoa",
+    chipServings: "Porções por Pacote de Salgadinhos",
+    dessertServings: "Porções por Pacote de Sobremesa",
+    planningCount: "Contagem com Margem",
+    pizzas: "Pizzas",
+    sodas: "Refrigerantes 2L",
+    water: "Garrafas de Água",
+    chips: "Pacotes de Salgadinhos",
+    desserts: "Pacotes de Sobremesa",
+    shoppingList: "Lista de Compras",
+    pizzaItem: "pizzas",
+    sodaItem: "refrigerantes de 2 litros",
+    waterItem: "garrafas de água",
+    chipItem: "pacotes de salgadinhos",
+    dessertItem: "pacotes de sobremesa",
+    icebreakerKind: "Quebra-gelo",
+    groupGameKind: "Jogo em Grupo",
+    all: "Todos",
+  },
+} as const;
+
+const tagLabels: Record<Language, Record<string, string>> = {
+  en: {
+    All: "All",
+    "Low prep": "Low prep",
+    "High energy": "High energy",
+    Discussion: "Discussion",
+    Teamwork: "Teamwork",
+    Printable: "Printable",
+    Indoor: "Indoor",
+    Outdoor: "Outdoor",
+    Strategy: "Strategy",
+    "No supplies": "No supplies",
+  },
+  pt: {
+    All: "Todos",
+    "Low prep": "Pouco preparo",
+    "High energy": "Alta energia",
+    Discussion: "Discussão",
+    Teamwork: "Trabalho em equipe",
+    Printable: "Imprimível",
+    Indoor: "Dentro",
+    Outdoor: "Fora",
+    Strategy: "Estratégia",
+    "No supplies": "Sem materiais",
+  },
+};
 
 const icebreakers: Game[] = [
   ["Two Truths and a Lie", ["Low prep", "Discussion", "Indoor", "No supplies"]],
@@ -242,6 +367,7 @@ function filterByTag(games: Game[], selectedTag: string) {
 }
 
 function App() {
+  const [language, setLanguage] = useState<Language>("en");
   const [activeTab, setActiveTab] = useState<PlannerTab>("games");
   const [date, setDate] = useState(new Date().toISOString().slice(0, 10));
   const [attendeeCount, setAttendeeCount] = useState(14);
@@ -256,13 +382,14 @@ function App() {
   const [selectedTag, setSelectedTag] = useState("All");
   const [icebreaker, setIcebreaker] = useState<Game>(() => pickOne(icebreakers));
   const [groupGame, setGroupGame] = useState<Game>(() => pickOne(groupGames));
+  const text = copy[language];
 
   const filteredIcebreakers = useMemo(() => filterByTag(icebreakers, selectedTag), [selectedTag]);
   const filteredGroupGames = useMemo(() => filterByTag(groupGames, selectedTag), [selectedTag]);
 
   const meetingSummary = useMemo(
-    () => `${date} | People: ${attendeeCount} | Total: ${duration} min | Theme: ${theme || "General"}`,
-    [date, attendeeCount, duration, theme],
+    () => `${date} | ${text.people}: ${attendeeCount} | ${text.totalMinutes}: ${duration} | ${text.summaryTheme}: ${theme || "General"}`,
+    [attendeeCount, date, duration, text.people, text.summaryTheme, text.totalMinutes, theme],
   );
 
   const foodEstimate = useMemo(() => {
@@ -337,11 +464,13 @@ function App() {
   }
 
   function renderGame(game: Game) {
+    const kindLabel = game.kind === "Icebreaker" ? text.icebreakerKind : text.groupGameKind;
+
     return (
       <>
         <div className="card-header">
           <div>
-            <p className="eyebrow">{game.kind}</p>
+            <p className="eyebrow">{kindLabel}</p>
             <h3>{game.name}</h3>
           </div>
           <span className="time-chip">{game.time}</span>
@@ -349,71 +478,77 @@ function App() {
         <p className="meta">{game.players}</p>
         <div className="tag-row compact">
           {game.tags.map((tag) => (
-            <span className="tag-label" key={tag}>{tag}</span>
+            <span className="tag-label" key={tag}>{tagLabels[language][tag]}</span>
           ))}
         </div>
-        <p><strong>Materials:</strong> {game.materials.join(", ")}</p>
+        <p><strong>{text.materials}:</strong> {game.materials.join(", ")}</p>
         <ol>{game.steps.map((step) => <li key={step}>{step}</li>)}</ol>
-        <p className="tip"><strong>Leader tip:</strong> {game.tips[0]}</p>
+        <p className="tip"><strong>{text.leaderTip}:</strong> {game.tips[0]}</p>
       </>
     );
   }
 
   return (
     <main className="app">
-      <div className="version-badge">v1</div>
+      <div className="top-controls">
+        <div className="language-toggle" aria-label="Language switcher">
+          <button className={language === "en" ? "active" : ""} onClick={() => setLanguage("en")} type="button">EN</button>
+          <button className={language === "pt" ? "active" : ""} onClick={() => setLanguage("pt")} type="button">PT</button>
+        </div>
+        <div className="version-badge">v1</div>
+      </div>
 
       <section className="hero">
-        <h1>Event Planner</h1>
-        <p>Plan games, icebreakers, and practical details for youth events and church gatherings.</p>
+        <h1>{text.title}</h1>
+        <p>{text.subtitle}</p>
       </section>
 
       <section className="panel">
-        <h2>Event Setup</h2>
+        <h2>{text.eventSetup}</h2>
         <div className="grid">
           <label>
-            Date
+            {text.date}
             <input type="date" value={date} onChange={(event) => setDate(event.target.value)} />
           </label>
           <label>
-            People
+            {text.people}
             <input type="number" min={4} value={attendeeCount} onChange={(event) => setAttendeeCount(Number(event.target.value))} />
           </label>
           <label>
-            Total Minutes
+            {text.totalMinutes}
             <input type="number" min={30} value={duration} onChange={(event) => setDuration(Number(event.target.value))} />
           </label>
           <label className="wide">
-            Theme
-            <input placeholder="Friendship, service, trust..." value={theme} onChange={(event) => setTheme(event.target.value)} />
+            {text.theme}
+            <input placeholder={text.themePlaceholder} value={theme} onChange={(event) => setTheme(event.target.value)} />
           </label>
         </div>
         <p className="summary">{meetingSummary}</p>
         <div className="row">
-          <button onClick={() => getNewGames()}>Get New Games</button>
-          <button className="secondary" onClick={printPlan}>Print Plan Sheet</button>
+          <button onClick={() => getNewGames()}>{text.getNewGames}</button>
+          <button className="secondary" onClick={printPlan}>{text.printPlan}</button>
         </div>
       </section>
 
       <nav className="tabs" aria-label="Planner sections">
         <button className={activeTab === "games" ? "tab active" : "tab"} onClick={() => setActiveTab("games")} type="button">
-          Games
+          {text.games}
         </button>
         <button className={activeTab === "food" ? "tab active" : "tab"} onClick={() => setActiveTab("food")} type="button">
-          Food Setup
+          {text.foodSetup}
         </button>
       </nav>
 
       {activeTab === "games" ? (
         <>
           <section className="panel source-note">
-            <strong>Game library note:</strong> These are starter activities, not sourced from your PDF books yet. Add your PDFs to the project and we can turn them into a tagged, sourced game library.
+            <strong>{text.sourceNotePrefix}</strong> {text.sourceNote}
           </section>
 
           <section className="panel">
             <div className="filter-heading">
-              <h2>Game Filters</h2>
-              <p>{filteredIcebreakers.length} icebreakers | {filteredGroupGames.length} group games</p>
+              <h2>{text.gameFilters}</h2>
+              <p>{filteredIcebreakers.length} {text.icebreakers} | {filteredGroupGames.length} {text.groupGames}</p>
             </div>
             <div className="tag-row">
               {tags.map((tag) => (
@@ -423,7 +558,7 @@ function App() {
                   onClick={() => selectTag(tag)}
                   type="button"
                 >
-                  {tag}
+                  {tagLabels[language][tag]}
                 </button>
               ))}
             </div>
@@ -435,82 +570,82 @@ function App() {
           </section>
 
           <section className="panel">
-            <h2>Printable Helpers</h2>
+            <h2>{text.printableHelpers}</h2>
             <div className="row">
-              <button onClick={() => printMafiaCards(8)}>Mafia Role Cards (8)</button>
-              <button onClick={() => printMafiaCards(12)}>Mafia Role Cards (12)</button>
+              <button onClick={() => printMafiaCards(8)}>{text.mafia8}</button>
+              <button onClick={() => printMafiaCards(12)}>{text.mafia12}</button>
             </div>
           </section>
         </>
       ) : (
         <section className="panel">
           <div className="filter-heading">
-            <h2>Food Setup</h2>
-            <p>Includes a 10% buffer</p>
+            <h2>{text.foodSetup}</h2>
+            <p>{text.buffer}</p>
           </div>
 
           <div className="grid">
             <label>
-              Slices Per Person
+              {text.slicesPerPerson}
               <input type="number" min={1} step={0.5} value={slicesPerPerson} onChange={(event) => setSlicesPerPerson(Number(event.target.value))} />
             </label>
             <label>
-              Slices Per Pizza
+              {text.slicesPerPizza}
               <input type="number" min={4} value={slicesPerPizza} onChange={(event) => setSlicesPerPizza(Number(event.target.value))} />
             </label>
             <label>
-              Soda Servings Per Person
+              {text.sodaPerPerson}
               <input type="number" min={0} step={0.5} value={sodaServingsPerPerson} onChange={(event) => setSodaServingsPerPerson(Number(event.target.value))} />
             </label>
             <label>
-              Water Bottles Per Person
+              {text.waterPerPerson}
               <input type="number" min={0} step={0.5} value={waterPerPerson} onChange={(event) => setWaterPerPerson(Number(event.target.value))} />
             </label>
             <label>
-              Chip Servings Per Bag
+              {text.chipServings}
               <input type="number" min={1} value={chipServingsPerBag} onChange={(event) => setChipServingsPerBag(Number(event.target.value))} />
             </label>
             <label>
-              Dessert Servings Per Package
+              {text.dessertServings}
               <input type="number" min={1} value={dessertServingsPerPackage} onChange={(event) => setDessertServingsPerPackage(Number(event.target.value))} />
             </label>
           </div>
 
           <div className="food-results">
             <article>
-              <span>Planning Count</span>
+              <span>{text.planningCount}</span>
               <strong>{foodEstimate.peopleWithBuffer}</strong>
             </article>
             <article>
-              <span>Pizzas</span>
+              <span>{text.pizzas}</span>
               <strong>{foodEstimate.pizzaCount}</strong>
             </article>
             <article>
-              <span>2-Liter Sodas</span>
+              <span>{text.sodas}</span>
               <strong>{foodEstimate.twoLiterSodas}</strong>
             </article>
             <article>
-              <span>Water Bottles</span>
+              <span>{text.water}</span>
               <strong>{foodEstimate.waterBottles}</strong>
             </article>
             <article>
-              <span>Chip Bags</span>
+              <span>{text.chips}</span>
               <strong>{foodEstimate.chipBags}</strong>
             </article>
             <article>
-              <span>Dessert Packs</span>
+              <span>{text.desserts}</span>
               <strong>{foodEstimate.dessertPackages}</strong>
             </article>
           </div>
 
           <div className="shopping-list">
-            <h3>Shopping List</h3>
+            <h3>{text.shoppingList}</h3>
             <ul>
-              <li>{foodEstimate.pizzaCount} pizzas</li>
-              <li>{foodEstimate.twoLiterSodas} two-liter sodas</li>
-              <li>{foodEstimate.waterBottles} water bottles</li>
-              <li>{foodEstimate.chipBags} bags of chips</li>
-              <li>{foodEstimate.dessertPackages} dessert packages</li>
+              <li>{foodEstimate.pizzaCount} {text.pizzaItem}</li>
+              <li>{foodEstimate.twoLiterSodas} {text.sodaItem}</li>
+              <li>{foodEstimate.waterBottles} {text.waterItem}</li>
+              <li>{foodEstimate.chipBags} {text.chipItem}</li>
+              <li>{foodEstimate.dessertPackages} {text.dessertItem}</li>
             </ul>
           </div>
         </section>
